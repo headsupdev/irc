@@ -36,39 +36,39 @@
 
   <repositories>
     <repository>
-      <id>headsup-open-release</id>
+      <id>headsupdev-release</id>
       <releases>
         <enabled>true</enabled>
       </releases>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <url>http://headsupdevelopment.org/repository/release/</url>
+      <url>http://headsupdev.org/repository/release/</url>
     </repository>
     <repository>
-      <id>headsup-open-snapshot</id>
+      <id>headsupdev-snapshot</id>
       <releases>
         <enabled>false</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-      <url>http://headsupdevelopment.org/repository/snapshot/</url>
+      <url>http://headsupdev.org/repository/snapshot/</url>
     </repository>
   </repositories>
 
   <distributionManagement>
     <repository>
-      <id>headsup-open-release</id>
-      <url>dav:http://headsupdevelopment.org/repository/release/</url>
+      <id>headsupdev-release</id>
+      <url>dav:http://headsupdev.org/repository/release/</url>
     </repository>
     <snapshotRepository>
-      <id>headsup-open-snapshot</id>
-      <url>dav:http://headsupdevelopment.org/repository/snapshot/</url>
+      <id>headsupdev-snapshot</id>
+      <url>dav:http://headsupdev.org/repository/snapshot/</url>
     </snapshotRepository>
     <site>
-      <id>headsup-open-site</id>
-      <url>dav:http://headsupdevelopment.org/repository/site/irc/</url>
+      <id>headsupdev-site</id>
+      <url>dav:http://headsupdev.org/repository/site/irc/</url>
     </site>
   </distributionManagement>
 
