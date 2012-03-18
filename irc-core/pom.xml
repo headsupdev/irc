@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.headsupdev.irc</groupId>
     <artifactId>irc</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>irc-core</artifactId>
@@ -13,7 +13,7 @@
     <dependency>
       <groupId>org.headsupdev.irc</groupId>
       <artifactId>irc-api</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
     <dependency>
       <groupId>org.schwering</groupId>
