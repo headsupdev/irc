@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.headsupdev</groupId>
+    <artifactId>headsupdev-parent</artifactId>
+    <version>1</version>
+  </parent>
+
+  <artifactId>irc</artifactId>
+  <groupId>org.headsupdev.irc</groupId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <name>HeadsUp IRC</name>
+  <url>http://headsupdev.org/irc/docs/</url>
+
+  <modules>
+    <module>irc-api</module>
+    <module>irc-core</module>
+  </modules>
+
+  <scm>
+    <connection>scm:git:git://github.com/headsupdev/irc.git</connection>
+    <developerConnection>scm:git:git@github.com:headsupdev/irc.git</developerConnection>
+    <url>http://headsupdev.org/irc/files/</url>
+  </scm>
+
+  <issueManagement>
+    <system>HeadsUp Agile</system>
+    <url>http://headsupdev.org/irc/issues</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>HeadsUp Agile</system>
+    <url>http://headsupdev.org/irc/builds</url>
+  </ciManagement>
+
+  <repositories>
+    <repository>
+      <id>headsup-open-release</id>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>http://headsupdevelopment.org/repository/release/</url>
+    </repository>
+    <repository>
+      <id>headsup-open-snapshot</id>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>http://headsupdevelopment.org/repository/snapshot/</url>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>headsup-open-release</id>
+      <url>dav:http://headsupdevelopment.org/repository/release/</url>
+    </repository>
+    <snapshotRepository>
+      <id>headsup-open-snapshot</id>
+      <url>dav:http://headsupdevelopment.org/repository/snapshot/</url>
+    </snapshotRepository>
+    <site>
+      <id>headsup-open-site</id>
+      <url>dav:http://headsupdevelopment.org/repository/site/irc/</url>
+    </site>
+  </distributionManagement>
+
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav</artifactId>
+        <version>1.0-beta-2</version>
+      </extension>
+    </extensions>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
