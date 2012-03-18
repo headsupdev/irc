@@ -8,7 +8,7 @@
 
   <artifactId>irc</artifactId>
   <groupId>org.headsupdev.irc</groupId>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>HeadsUp IRC</name>
   <url>http://headsupdev.org/irc/docs/</url>
@@ -59,16 +59,16 @@
 
   <distributionManagement>
     <repository>
-      <id>headsupdev-release</id>
-      <url>dav:http://headsupdev.org/repository/release/</url>
+      <id>headsup-open-release</id>
+      <url>dav:http://headsupdevelopment.org/repository/release/</url>
     </repository>
     <snapshotRepository>
-      <id>headsupdev-snapshot</id>
-      <url>dav:http://headsupdev.org/repository/snapshot/</url>
+      <id>headsup-open-snapshot</id>
+      <url>dav:http://headsupdevelopment.org/repository/snapshot/</url>
     </snapshotRepository>
     <site>
-      <id>headsupdev-site</id>
-      <url>dav:http://headsupdev.org/repository/site/irc/</url>
+      <id>headsup-open-site</id>
+      <url>dav:http://headsupdevelopment.org/repository/site/irc/</url>
     </site>
   </distributionManagement>
 
