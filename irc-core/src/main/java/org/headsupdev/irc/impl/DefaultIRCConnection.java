@@ -62,9 +62,22 @@ public class DefaultIRCConnection
 
         checkConnected();
 
+        int linesSent = 0;
         String[] lines = message.split( "\n" );
         for ( int i = 0; i < lines.length; i++ )
         {
+            linesSent++;
+            if ( linesSent > 5 )
+            {
+                try
+                {
+                    Thread.sleep( 100 * ( ( linesSent <= 10 ) ? 1 : 5 ) );
+                }
+                catch ( InterruptedException e )
+                {
+                    // risk posting anyway
+                }
+            }
             conn.doPrivmsg( to, lines[i] );
         }
     }
