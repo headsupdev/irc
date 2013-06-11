@@ -52,7 +52,7 @@ public class IRCServiceManagerTest
         String exception = "none";
 
         IRCServiceManager ircManager = new DefaultIRCServiceManager();
-        DefaultIRCServiceListener listeners = new DefaultIRCServiceListener( ircManager, null );
+        DefaultIRCServiceListener listeners = new DefaultIRCServiceListener( null );
         try
         {
             listeners.onPrivmsg( "#test", new org.schwering.irc.lib.IRCUser( "nick", "user", "host" ), "~broken test" );

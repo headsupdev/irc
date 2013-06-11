@@ -45,18 +45,21 @@ public class DefaultIRCServiceListener
 
     private static String INTRO_CHARS = "!~'";
 
-    private IRCServiceManager manager;
     private IRCConnection conn;
 
-    public DefaultIRCServiceListener( IRCServiceManager manager, IRCConnection conn )
+    public DefaultIRCServiceListener( IRCConnection conn )
     {
-        this.manager = manager;
         this.conn = conn;
+    }
+
+    protected IRCServiceManager getManager()
+    {
+        return IRCServiceManager.getInstance();
     }
 
     public void onRegistered()
     {
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -74,7 +77,7 @@ public class DefaultIRCServiceListener
 
     public void onDisconnected()
     {
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -92,7 +95,7 @@ public class DefaultIRCServiceListener
 
     public void onError( String message )
     {
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -110,7 +113,7 @@ public class DefaultIRCServiceListener
 
     public void onError( int num, String message )
     {
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -130,7 +133,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -150,7 +153,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -170,7 +173,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -191,7 +194,7 @@ public class DefaultIRCServiceListener
 /* FIXME - figure out the modeparser stuff - do we need it?
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -212,7 +215,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -232,7 +235,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -252,7 +255,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -272,7 +275,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -290,7 +293,7 @@ public class DefaultIRCServiceListener
 
     public void onPing( String ping )
     {
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -309,12 +312,14 @@ public class DefaultIRCServiceListener
     private void doCommand( String target, org.headsupdev.irc.IRCUser user, String message )
     {
         String command = message.split( " " )[0];
-        IRCCommand match = (IRCCommand) manager.getCommands().get( command );
+        IRCCommand match = (IRCCommand) getManager().getCommands().get( command );
         if ( match == null )
         {
+            System.out.println("not found, commands count" + getManager().getCommands());
             return;
         }
         String rest = message.substring( command.length() ).trim();
+        System.out.println("rest = " + rest);
 
         try
         {
@@ -337,6 +342,7 @@ public class DefaultIRCServiceListener
     public void onPrivmsg( String target, IRCUser user, String message )
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
+        System.out.println("message = " + message);
 
         if ( message.startsWith( "ACTION " ) )
         {
@@ -382,7 +388,7 @@ public class DefaultIRCServiceListener
             /* private commands */
             doCommand( target, ircUser, message );
 
-            Iterator listenerIter = manager.getListeners().iterator();
+            Iterator listenerIter = getManager().getListeners().iterator();
             while ( listenerIter.hasNext() )
             {
                 IRCListener next = (IRCListener) listenerIter.next();
@@ -399,7 +405,7 @@ public class DefaultIRCServiceListener
         }
         else
         {
-            Iterator listenerIter = manager.getListeners().iterator();
+            Iterator listenerIter = getManager().getListeners().iterator();
             while ( listenerIter.hasNext() )
             {
                 IRCListener next = (IRCListener) listenerIter.next();
@@ -420,7 +426,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -438,7 +444,7 @@ public class DefaultIRCServiceListener
 
     public void onReply( int num, String value, String message )
     {
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -458,7 +464,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -478,7 +484,7 @@ public class DefaultIRCServiceListener
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -496,11 +502,11 @@ public class DefaultIRCServiceListener
 
     public void onVersion( String target, IRCUser user )
     {
-        conn.sendNotice( user.getNick(), IRCUtil.actionIndicator + "VERSION " + manager.getServiceName() + " " +
-            info.getString( "version" ) + " - " + manager.getDescription() + " " );
+        conn.sendNotice( user.getNick(), IRCUtil.actionIndicator + "VERSION " + getManager().getServiceName() + " " +
+            info.getString( "version" ) + " - " + getManager().getDescription() + " " );
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();
@@ -521,7 +527,7 @@ public class DefaultIRCServiceListener
         conn.sendNotice( user.getNick(), IRCUtil.actionIndicator + "Time " + new Date() + " " );
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
 
-        Iterator listenerIter = manager.getListeners().iterator();
+        Iterator listenerIter = getManager().getListeners().iterator();
         while ( listenerIter.hasNext() )
         {
             IRCListener next = (IRCListener) listenerIter.next();

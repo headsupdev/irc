@@ -87,7 +87,7 @@ public class DefaultIRCServiceManager
         conn.setPong( true );
 
         org.headsupdev.irc.IRCConnection ret = new DefaultIRCConnection( conn );
-        conn.addIRCEventListener( new DefaultIRCServiceListener( this, ret ) );
+        conn.addIRCEventListener( new DefaultIRCServiceListener( ret ) );
 
         conn.connect();
         return ret;
