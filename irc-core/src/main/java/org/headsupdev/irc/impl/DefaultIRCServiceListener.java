@@ -315,11 +315,9 @@ public class DefaultIRCServiceListener
         IRCCommand match = (IRCCommand) getManager().getCommands().get( command );
         if ( match == null )
         {
-            System.out.println("not found, commands count" + getManager().getCommands());
             return;
         }
         String rest = message.substring( command.length() ).trim();
-        System.out.println("rest = " + rest);
 
         try
         {
@@ -342,7 +340,6 @@ public class DefaultIRCServiceListener
     public void onPrivmsg( String target, IRCUser user, String message )
     {
         org.headsupdev.irc.IRCUser ircUser = new DefaultIRCUser( user );
-        System.out.println("message = " + message);
 
         if ( message.startsWith( "ACTION " ) )
         {
