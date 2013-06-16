@@ -315,6 +315,7 @@ public class DefaultIRCServiceListener
         IRCCommand match = getManager().getCommands().get( command );
         if ( match == null )
         {
+            conn.sendMessage( target, "Unrecognised command " + command );
             return;
         }
         String rest = message.substring( command.length() ).trim();
