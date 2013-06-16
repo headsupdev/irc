@@ -8,7 +8,7 @@
 
   <artifactId>irc</artifactId>
   <groupId>org.headsupdev.irc</groupId>
-  <version>1.3-SNAPSHOT</version>
+  <version>1.3</version>
   <packaging>pom</packaging>
   <name>HeadsUp IRC</name>
   <url>http://headsupdev.org/irc/docs/</url>
