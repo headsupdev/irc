@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Heads Up Development Ltd.
+ * Copyright 2010-2013 Heads Up Development Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,35 +27,23 @@ import java.util.Map;
  * @version $Id: IRCServiceManager.java 55 2009-12-08 15:46:03Z handyande $
  * @since 1.0
  */
-public abstract class IRCServiceManager
+public interface IRCServiceManager
 {
-    static IRCServiceManager instance;
+    public String getServiceName();
 
-    public static IRCServiceManager getInstance()
-    {
-        return instance;
-    }
+    public void setServiceName( String name );
 
-    public static void setInstance( IRCServiceManager instance )
-    {
-        IRCServiceManager.instance = instance;
-    }
+    public String getDescription();
 
-    public abstract String getServiceName();
+    public void setDescription( String description );
 
-    public abstract void setServiceName( String name );
-
-    public abstract String getDescription();
-
-    public abstract void setDescription( String description );
-
-    public abstract IRCConnection connect( String host, String nick, String username, String realname )
+    public IRCConnection connect( String host, String nick, String username, String realname )
         throws IOException;
 
-    public abstract IRCConnection connect( String host, String nick, String pass, String username, String realname )
+    public IRCConnection connect( String host, String nick, String pass, String username, String realname )
         throws IOException;
 
-    public abstract Map<String,IRCCommand> getCommands();
+    public Map<String,IRCCommand> getCommands();
 
-    public abstract List<IRCListener> getListeners();
+    public List<IRCListener> getListeners();
 }

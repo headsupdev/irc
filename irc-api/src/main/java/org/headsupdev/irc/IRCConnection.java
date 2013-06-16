@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Heads Up Development Ltd.
+ * Copyright 2010-2013 Heads Up Development Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ import java.io.IOException;
  */
 public interface IRCConnection
 {
+    IRCServiceManager getManager();
+
     void disconnect()
         throws IOException;
 

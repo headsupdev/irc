@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Heads Up Development Ltd.
+ * Copyright 2010-2013 Heads Up Development Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,7 +54,7 @@ public class DefaultIRCServiceListener
 
     protected IRCServiceManager getManager()
     {
-        return IRCServiceManager.getInstance();
+        return conn.getManager();
     }
 
     public void onRegistered()
@@ -312,7 +312,7 @@ public class DefaultIRCServiceListener
     private void doCommand( String target, org.headsupdev.irc.IRCUser user, String message )
     {
         String command = message.split( " " )[0];
-        IRCCommand match = (IRCCommand) getManager().getCommands().get( command );
+        IRCCommand match = getManager().getCommands().get( command );
         if ( match == null )
         {
             return;

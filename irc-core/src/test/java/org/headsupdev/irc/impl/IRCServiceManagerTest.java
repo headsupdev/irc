@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Heads Up Development Ltd.
+ * Copyright 2010-2013 Heads Up Development Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,8 +51,21 @@ public class IRCServiceManagerTest
     {
         String exception = "none";
 
-        IRCServiceManager ircManager = new DefaultIRCServiceManager();
-        DefaultIRCServiceListener listeners = new DefaultIRCServiceListener( null );
+        final IRCServiceManager ircManager = new DefaultIRCServiceManager();
+        DefaultIRCServiceListener listeners = new DefaultIRCServiceListener( new DefaultIRCConnection( null, ircManager )
+        {
+            @Override
+            public void checkConnected()
+            {
+                // not testing this function
+            }
+
+            @Override
+            public void sendMessage( String to, String message )
+            {
+                // not testing this function
+            }
+        } );
         try
         {
             listeners.onPrivmsg( "#test", new org.schwering.irc.lib.IRCUser( "nick", "user", "host" ), "~broken test" );
@@ -62,6 +75,6 @@ public class IRCServiceManagerTest
             exception = e.getMessage();
         }
 
-        assertEquals( exception, "none" );
+        assertEquals( "none", exception );
     }
 }

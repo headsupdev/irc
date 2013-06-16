@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Heads Up Development Ltd.
+ * Copyright 2010-2013 Heads Up Development Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ import java.util.Map;
  * @since 1.0
  */
 public class DefaultIRCServiceManager
-    extends IRCServiceManager
+    implements IRCServiceManager
 {
     private Map<String, IRCCommand> commands = new HashMap<String,IRCCommand>();
     private List<IRCListener> listeners = new LinkedList<IRCListener>();
@@ -47,7 +47,6 @@ public class DefaultIRCServiceManager
     public DefaultIRCServiceManager()
     {
         addCommand( new Help() );
-        IRCServiceManager.setInstance( this );
     }
 
     public String getServiceName()
@@ -82,11 +81,10 @@ public class DefaultIRCServiceManager
         int portMin = 6667;
         int portMax = 6669;
 
-//        getLogger().debug( "connecting" );
         IRCConnection conn = new IRCConnection( host, portMin, portMax, pass, nick, username, realname );
         conn.setPong( true );
 
-        org.headsupdev.irc.IRCConnection ret = new DefaultIRCConnection( conn );
+        org.headsupdev.irc.IRCConnection ret = new DefaultIRCConnection( conn, this );
         conn.addIRCEventListener( new DefaultIRCServiceListener( ret ) );
 
         conn.connect();

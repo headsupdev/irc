@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Heads Up Development Ltd.
+ * Copyright 2010-2013 Heads Up Development Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,11 +42,11 @@ public class Help
 
     public void onCommand( String channel, IRCUser user, String message, IRCConnection conn )
     {
-        Map commands = IRCServiceManager.getInstance().getCommands();
+        Map commands = conn.getManager().getCommands();
 
         if ( message == null || message.equals( "" ) )
         {
-            conn.sendMessage( channel, IRCServiceManager.getInstance().getServiceName() +
+            conn.sendMessage( channel, conn.getManager().getServiceName() +
                 " - the following commands are available" );
             Iterator commandIter = commands.keySet().iterator();
             StringBuffer list = new StringBuffer( "  " );

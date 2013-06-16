@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Heads Up Development Ltd.
+ * Copyright 2010-2013 Heads Up Development Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package org.headsupdev.irc.impl;
 
+import org.headsupdev.irc.IRCServiceManager;
 import org.schwering.irc.lib.IRCConnection;
 import org.schwering.irc.lib.IRCUtil;
 
@@ -32,10 +33,17 @@ public class DefaultIRCConnection
     implements org.headsupdev.irc.IRCConnection
 {
     private IRCConnection conn;
+    private IRCServiceManager manager;
 
-    public DefaultIRCConnection( IRCConnection conn )
+    public DefaultIRCConnection( IRCConnection conn, IRCServiceManager manager )
     {
         this.conn = conn;
+        this.manager = manager;
+    }
+
+    public IRCServiceManager getManager()
+    {
+        return manager;
     }
 
     public void disconnect()
