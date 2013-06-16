@@ -309,13 +309,23 @@ public class DefaultIRCServiceListener
         }
     }
 
-    private void doCommand( String target, org.headsupdev.irc.IRCUser user, String message )
+    private void doCommand( String target, org.headsupdev.irc.IRCUser user, String message, boolean replyErrors )
     {
         String command = message.split( " " )[0];
         IRCCommand match = getManager().getCommands().get( command );
         if ( match == null )
         {
-            conn.sendMessage( target, "Unrecognised command " + command );
+            if ( replyErrors )
+            {
+                if ( target.equals( conn.getNick() ) )
+                {
+                    conn.sendMessage( user.getNick(), "Unrecognised command " + command );
+                }
+                else
+                {
+                    conn.sendMessage( target, "Unrecognised command " + command );
+                }
+            }
             return;
         }
         String rest = message.substring( command.length() ).trim();
@@ -362,7 +372,7 @@ public class DefaultIRCServiceListener
         /* addressed through a shortcut */
         if ( message.length() > 0 && isIntroChar( message.charAt( 0 ) ) )
         {
-            doCommand( target, ircUser, message.substring( 1 ).trim() );
+            doCommand( target, ircUser, message.substring( 1 ).trim(), false );
             return;
         }
         else
@@ -375,7 +385,7 @@ public class DefaultIRCServiceListener
 
                 if ( arg1.equals( conn.getNick() ) )
                 {
-                    doCommand( target, ircUser, message.substring( arg1.length() + 1 ).trim() );
+                    doCommand( target, ircUser, message.substring( arg1.length() + 1 ).trim(), true );
                     return;
                 }
             }
@@ -384,7 +394,7 @@ public class DefaultIRCServiceListener
         if ( target.equals( conn.getNick() ) )
         {
             /* private commands */
-            doCommand( target, ircUser, message );
+            doCommand( target, ircUser, message, true );
 
             Iterator listenerIter = getManager().getListeners().iterator();
             while ( listenerIter.hasNext() )

@@ -65,6 +65,12 @@ public class IRCServiceManagerTest
             {
                 // not testing this function
             }
+
+            @Override
+            public String getNick()
+            {
+                return "test";
+            }
         } );
         try
         {
